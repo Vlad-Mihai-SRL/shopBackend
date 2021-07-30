@@ -41,7 +41,10 @@ const userSchema= new mongoose.Schema({
          id:String,
          responses:[Number]
      }],
-
+     Cart:[{
+         productId:String,
+         quantity:Number
+     }]
 });
 
 const User=mongoose.model('User',userSchema);
