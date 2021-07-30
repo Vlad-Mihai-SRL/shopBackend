@@ -8,10 +8,41 @@ const userSchema= new mongoose.Schema({
         dropDups: true  ,
      },
      verified:{
-         type:Boolean
-     }
-     ,
+         type:Boolean,
+         default:false,
+     },
      firstName:{
          type:String,
-     }
+         required:true,
+     },
+     lastName:{
+         type:String,
+         required:true,
+     },
+     password:{
+        type:String,
+        required:true,
+     },
+     shippingAddress:{
+        country:String,
+        city:String,
+        street:String,
+        Zip:String,
+        default:{}
+     },
+     billingAddress:{
+        country:String,
+        city:String,
+        street:String,
+        Zip:String,
+        default:{}
+     },
+     Prefrences:[{
+         id:String,
+         responses:[Number]
+     }],
+
 });
+
+
+exports.userSchema=userSchema;
