@@ -1,5 +1,4 @@
 const mongoose=require('mongoose');
-
 const productSchema= new mongoose.Schema({
     categories: [String],
     name: {type: String, required: true},
@@ -33,5 +32,7 @@ const productSchema= new mongoose.Schema({
 // 	reviewsFull: [{Name, Float, String}],
 // 	specialAttributes: {},
 // }
+const Product = mongoose.model('Product' , productSchema);
 
+exports.Product=Product;
 exports.productSchema = productSchema;

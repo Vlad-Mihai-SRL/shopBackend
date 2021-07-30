@@ -7,6 +7,8 @@ const port = process.env.PORT | 3000;
 const mongoose = require('mongoose');
 const userSchema = require('./schemes/user').userSchema;
 const productSchema = require("./schemes/product").productSchema;
+const schemeImport = require("./schemeImport");
+
 function init(){
     console.log(port);
     client.connect();
@@ -15,16 +17,15 @@ function init(){
 function main(){
     mongoose.connect(process.env.DB_URI, {useNewUrlParser: true, useUnifiedTopology: true});
     const db=mongoose.connection;
-    const User=mongoose.model('User',userSchema);
-    // const testUser=new User({email:"mihai2.indreias@gmail.com",
-    //                             //firstName:"Mihai2 ",
-    //                             lastName:"Indreias",
-    //                             password:"11234",
-    //     });
-    // testUser.save(function (err, fluffy) {
-    //     if (err) return console.error(err);
-    //     console.log(fluffy);
-    //   });
+     const testUser=new schemeImport.User({email:"mihai32.indreias@gmail.com",
+                                 firstName:"Mihai23 ",
+                                 lastName:"Indreias3",
+                                 password:"11234",
+         });
+     testUser.save(function (err, fluffy) {
+         if (err) return console.error(err);
+        console.log(fluffy);
+       });
     const Product = mongoose.model('Product' , productSchema);
     // const testProduct = new Product({
     //     name: "Paine prajita",
