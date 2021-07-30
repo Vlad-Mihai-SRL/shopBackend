@@ -6,7 +6,7 @@ const app = express();
 const port = process.env.PORT | 3000;
 const mongoose = require('mongoose');
 const userSchema = require('./schemes/user').userSchema;
-
+const productSchema = require("./schemes/product").productSchema;
 function init(){
     console.log(port);
     client.connect();
@@ -25,7 +25,16 @@ function main(){
     //     if (err) return console.error(err);
     //     console.log(fluffy);
     //   });
-
+    const Product = mongoose.model('Product' , productSchema);
+    // const testProduct = new Product({
+    //     name: "Paine prajita",
+    //     listPrice: "19.99",
+    //     currentPrice: "15.99",
+    // });
+    // testProduct.save(function (err , product){
+    //     if(err) return console.error(err);
+    //     console.log(product);
+    // });
     app.get('/',(req,res)=>{
         res.status(200).send("Up and running");
     });
