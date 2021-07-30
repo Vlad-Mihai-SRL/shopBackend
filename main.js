@@ -12,6 +12,9 @@ const userSchema = require("./schemes/user").userSchema;
 const productSchema = require("./schemes/product").productSchema;
 const schemeImport = require("./schemeImport");
 const ProductMethods = require("./methods/product");
+
+const UserMethods = require("./methods/user");
+
 function init() {
   console.log(port);
   client.connect();
@@ -32,7 +35,6 @@ function main() {
   //      if (err) return console.error(err);
   //     console.log(fluffy);
   //    });
-  // const Product = mongoose.model('Product' , productSchema);
   // const testProduct = new Product({
   //     name: "Paine prajita",
   //     listPrice: "19.99",
@@ -42,8 +44,13 @@ function main() {
   //     if(err) return console.error(err);
   //     console.log(product);
   // });
+  app.use(express.json());
   app.get("/", (req, res) => {
     res.status(200).send("Up and running");
+  });
+
+  app.post("/user", (req, res) => {
+    UserMethods.createUser(schemeImport.User, req, res);
   });
   app.get("/products", (req, res) => {
     ProductMethods.getAllProducts(schemeImport.Product, req, res);
