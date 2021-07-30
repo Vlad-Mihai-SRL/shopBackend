@@ -1,5 +1,5 @@
-const User=require('./schemes/user').User;
-const Product = mongoose.model('Product' , productSchema).Product;
+const User = require("./schemes/user").User;
+const Product = require("./schemes/product").Product;
 
-exports.User=User;
-exports.Product=Product;
+exports.User = User;
+exports.Product = Product;
