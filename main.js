@@ -4,6 +4,7 @@ const client = new MongoClient(process.env.DB_URI, { useNewUrlParser: true, useU
 const express = require('express');
 const app = express();
 const port = process.env.PORT | 3000;
+const mongoose = require('mongoose');
 
 function init(){
     console.log(port);
@@ -17,7 +18,9 @@ function main(){
     });
     app.listen(port,()=>{
         console.log(`Started listening on port ${port}`);
-    })
+    });
+
+    client.close();
 }
 
 init();
