@@ -60,8 +60,10 @@ function main() {
     ProductMethods.getProductById(schemeImport.Product, req, res);
   });
   app.post("/product", (req, res) => {
-    console.log(req);
     ProductMethods.addProduct(schemeImport.Product, req, res);
+  });
+  app.put("/product", (req, res) => {
+    ProductMethods.updateProductById(schemeImport.Product, req, res);
   });
   app.listen(port, () => {
     console.log(`Started listening on port ${port}`);
