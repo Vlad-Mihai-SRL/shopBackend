@@ -52,6 +52,9 @@ function main() {
   app.post("/user", (req, res) => {
     UserMethods.createUser(schemeImport.User, req, res);
   });
+  app.post("/login", (req, res) => {
+    UserMethods.loginUser(schemeImport.User, req, res);
+  });
   app.get("/products", (req, res) => {
     ProductMethods.getAllProducts(schemeImport.Product, req, res);
   });
