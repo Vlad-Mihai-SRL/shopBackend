@@ -14,7 +14,7 @@ const schemeImport = require("./schemeImport");
 const ProductMethods = require("./methods/product");
 
 const UserMethods = require("./methods/user");
-
+const cors = require("cors");
 function init() {
   console.log(port);
   client.connect();
@@ -45,6 +45,7 @@ function main() {
   //     console.log(product);
   // });
   app.use(express.json());
+  app.use(cors());
   app.get("/", (req, res) => {
     res.status(200).send("Up and running");
   });
