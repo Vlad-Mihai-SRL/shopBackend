@@ -55,6 +55,12 @@ function main() {
   app.post("/login", (req, res) => {
     UserMethods.loginUser(schemeImport.User, req, res);
   });
+  app.get("/user/:token", (req, res) => {
+    UserMethods.getPersonalInfo(schemeImport.User, req, res);
+  });
+  app.put("/user", (req, res) => {
+    UserMethods.updatePersonalInformation(schemeImport.User, req, res);
+  });
   app.get("/products", (req, res) => {
     ProductMethods.getAllProducts(schemeImport.Product, req, res);
   });
@@ -68,6 +74,7 @@ function main() {
   app.put("/product", (req, res) => {
     ProductMethods.updateProductById(schemeImport.Product, req, res);
   });
+
   app.listen(port, () => {
     console.log(`Started listening on port ${port}`);
   });

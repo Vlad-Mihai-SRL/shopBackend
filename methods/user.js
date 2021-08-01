@@ -1,5 +1,7 @@
 const sha256 = require("js-sha256");
 const jwt = require("jsonwebtoken");
+const userUtils = require("./userUtilsService");
+
 function createUser(model, req, res) {
   let user = new model({ ...req.body, password: sha256(req.body.password) });
   user.save((err, data) => {
@@ -20,8 +22,20 @@ function loginUser(model, req, res) {
     .findOne({ email: email, password: sha256(password) })
     .then((data, err) => {
       if (data && !err) {
+        let isAdmin = false;
+        if (
+          email == "mihai.indreias@gmail.com" ||
+          email == "vlad.cainamisir@gmail.com"
+        )
+          isAdmin = true;
         const token = jwt.sign(
-          { user_id: data._id, email: email },
+          {
+            user_id: data._id,
+            email: email,
+            verified: data.verified,
+            password: sha256(password),
+            isAdmin: isAdmin,
+          },
           process.env.TOKEN_KEY,
           {
             expiresIn: "12h",
@@ -37,5 +51,64 @@ function loginUser(model, req, res) {
     });
 }
 
+function getPersonalInfo(model, req, res) {
+  let userToken = req.params.token;
+  try {
+    let decoded = jwt.verify(userToken, process.env.TOKEN_KEY);
+    model
+      .findOne({
+        _id: decoded.user_id,
+        email: decoded.email,
+        password: decoded.password,
+      })
+      .then((data, err) => {
+        if (data && !err) {
+          console.log(data);
+          res.status(200).send(data);
+        } else
+          res
+            .status(404)
+            .send({ error: "Could not find user with this id/email" });
+      });
+  } catch (e) {
+    console.log(e);
+    res.status(404).send({ error: e });
+  }
+}
+
+function updatePersonalInformation(model, req, res) {
+  let userToken = req.body.token;
+  try {
+    let decoded = jwt.verify(userToken, process.env.TOKEN_KEY);
+    let newUserInfo = req.body.userInfo;
+    let userDocument = new model(newUserInfo);
+    console.log(newUserInfo, userDocument);
+    delete newUserInfo.verified;
+    delete newUserInfo._id;
+    delete newUserInfo.password;
+    model.findOneAndUpdate(
+      {
+        _id: decoded.user_id,
+        email: decoded.email,
+        password: decoded.password,
+      },
+      newUserInfo,
+      (err, data) => {
+        if (err || !data)
+          console.log(err), res.status(500).send({ error: err });
+        else
+          res
+            .status(200)
+            .send({ response: "Successfully updated user information" });
+      }
+    );
+  } catch (e) {
+    console.log(e);
+    res.status(404).send({ error: e });
+  }
+}
+
 exports.createUser = createUser;
 exports.loginUser = loginUser;
+exports.getPersonalInfo = getPersonalInfo;
+exports.updatePersonalInformation = updatePersonalInformation;

@@ -37,7 +37,7 @@ const userSchema = new mongoose.Schema({
     Zip: String,
     default: {},
   },
-  Prefrences: [
+  Preferences: [
     {
       id: String,
       responses: [Number],

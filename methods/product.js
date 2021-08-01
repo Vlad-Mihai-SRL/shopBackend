@@ -1,3 +1,5 @@
+const userUtils = require("./userUtilsService");
+
 function getAllProducts(model, req, res) {
   model.find({}).then((data, err) => {
     console.log(data);
@@ -17,6 +19,10 @@ function getProductById(model, req, res) {
   });
 }
 function addProduct(model, req, res) {
+  if (!userUtils.isUserAdmin(req.body.token)) {
+    res.status(500).send({ error: "No permissions" });
+    return;
+  }
   product = new model(req.body.product);
   product.save(function (err, product) {
     if (err) {
@@ -30,13 +36,17 @@ function addProduct(model, req, res) {
   });
 }
 function updateProductById(model, req, res) {
+  if (!userUtils.isUserAdmin(req.body.token)) {
+    res.status(500).send({ error: "No permissions" });
+    return;
+  }
   if (req.body._id) {
     model
       .updateOne({ _id: req.body._id }, req.body.product)
       .then((data, err) => {
         if (data && !err) {
           console.log(data);
-          res.status(200).send(data);
+          res.status(200).send({ response: "Product updated succesfully" });
         } else {
           console.log(data, err);
           res.status(500).send(err);
