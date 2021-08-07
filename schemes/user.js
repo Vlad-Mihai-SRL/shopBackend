@@ -27,6 +27,7 @@ const userSchema = new mongoose.Schema({
     country: String,
     city: String,
     street: String,
+    number: String,
     Zip: String,
     default: {},
   },
@@ -35,6 +36,7 @@ const userSchema = new mongoose.Schema({
     city: String,
     street: String,
     Zip: String,
+    number: String,
     default: {},
   },
   Preferences: [
