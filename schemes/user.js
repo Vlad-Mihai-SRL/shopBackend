@@ -45,12 +45,7 @@ const userSchema = new mongoose.Schema({
       responses: [Number],
     },
   ],
-  Cart: [
-    {
-      productId: String,
-      quantity: Number,
-    },
-  ],
+  Cart: {},
 });
 
 const User = mongoose.model("User", userSchema);
