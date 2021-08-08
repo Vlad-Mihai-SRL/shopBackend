@@ -30,12 +30,17 @@ function createOrder(orderModel, req, res) {
         { id: decoded._id, email: decoded.email, password: decoded.password },
         (err, data) => {
           if (err || !data) res.status(404).send({ error: err });
-          else
+          else {
+            data.Cat = {};
+            data.save();
             newOrder.save((err, data) => {
               console.log(data);
               if (err || !data) res.status(500).send({ error: err });
-              else res.status(200).send({ data: data });
+              else {
+                res.status(200).send({ data: data });
+              }
             });
+          }
         }
       );
     });
