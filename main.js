@@ -12,7 +12,7 @@ const userSchema = require("./schemes/user").userSchema;
 const productSchema = require("./schemes/product").productSchema;
 const schemeImport = require("./schemeImport");
 const ProductMethods = require("./methods/product");
-
+const CartMethods = require("./methods/cart");
 const UserMethods = require("./methods/user");
 const cors = require("cors");
 function init() {
@@ -86,7 +86,9 @@ function main() {
   app.put("/product", (req, res) => {
     ProductMethods.updateProductById(schemeImport.Product, req, res);
   });
-
+  app.post("/order", (req, res) => {
+    CartMethods.createOrder(schemeImport.Order, req, res);
+  });
   app.listen(port, () => {
     console.log(`Started listening on port ${port}`);
   });
